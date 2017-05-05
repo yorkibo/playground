@@ -3,16 +3,40 @@ package achtdame;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class AchtDame
 {
 
     public static void main(String[] args)
     {
-        for (List<Integer> loesung : damenProblem(8, 8))
+        for (List<Integer> loesung : damenProblem(4, 4))
         {
             System.out.println(loesung.toString());
         }
 
+    }
+
+    public static boolean isLoesung(String moeglicheLoesung)
+    {
+        boolean isLoesung = false;
+        
+        //nur quadratische Bretter
+        int reiheUndSpalte = StringUtils.countMatches(moeglicheLoesung, ",") + 1;
+
+        List<String> loesungAlsString = new ArrayList<>();
+
+        for (List<Integer> loesung : damenProblem(reiheUndSpalte, reiheUndSpalte))
+        {
+            loesungAlsString.add(loesung.toString());
+        }
+
+        if (loesungAlsString.contains(moeglicheLoesung))
+        {
+            isLoesung = true;
+        }
+
+        return isLoesung;
     }
 
     private static List<ArrayList<Integer>> damenProblem(int reihen, int spalten)
@@ -29,7 +53,8 @@ public class AchtDame
         }
     }
 
-    private static List<ArrayList<Integer>> eineDameDazu(int neueReihe, int spalten, List<ArrayList<Integer>> vorherigeLoesungen)
+    private static List<ArrayList<Integer>> eineDameDazu(int neueReihe, int spalten,
+        List<ArrayList<Integer>> vorherigeLoesungen)
     {
         List<ArrayList<Integer>> neueLoesungen = new ArrayList<ArrayList<Integer>>();
 
